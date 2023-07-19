@@ -25,7 +25,6 @@ def generate_image(prompt: str) -> str:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAoMnIpP-8Ol0NruZ7nuPpCOh-4ULSBwVVErnxkw_tjdl9iYbv2K0WgT69SaAdZKVZlQc&usqp=CAU']
     return figures
 
-
 def download_image(url: str, session_id: str) -> bool:
     img = io.imread(url)
 
@@ -42,3 +41,12 @@ def download_image(url: str, session_id: str) -> bool:
         img_to_download.save(f"data/images/{session_id}.png")
     else:
         img_to_download.save(f"data/images/{session_id}.png")
+
+def get_user_ip():
+    try:
+        response = requests.get("https://api.ipify.org?format=json")
+        ip_data = response.json()
+        user_ip = ip_data.get("ip")
+        return user_ip
+    except requests.RequestException as e:
+        return None
