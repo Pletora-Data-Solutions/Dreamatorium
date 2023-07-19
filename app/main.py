@@ -2,6 +2,8 @@ import streamlit as st
 from streamlit_image_select import image_select
 import pyautogui
 
+import uuid
+
 from utils import generate_image
 from utils import download_image
 
@@ -23,6 +25,8 @@ st.markdown('---')
 # # Input prompt
 st.markdown("<h5 style='text-align: center;'>What is on your mind?</h5>", unsafe_allow_html=True)
 st.text_area("", height=100, key='input', help='')
+
+st.session_state.session_id = uuid.uuid4()
     
 if "dream" not in st.session_state:
     st.session_state.dream = False
@@ -33,7 +37,7 @@ if "img" not in st.session_state:
 if st.button("Dream"):
     st.session_state.dream = True
 
-if st.session_state != "":
+if st.session_state.input != "":
     if "generated" not in st.session_state and st.session_state.dream == True:
         prompt = st.session_state['input']
         st.session_state.generated = generate_image(prompt)
@@ -48,12 +52,12 @@ if st.session_state != "":
                     pyautogui.hotkey("ctrl","F5")
                 if col1.button("Download"):
                     if st.session_state.img != '':
-                        download_image(st.session_state.img)
+                        download_image(st.session_state.img, str(st.session_state.session_id))
                     else:
                         st.error("No image selected to download")
-            except:
-                st.error("Could not show image")
+            except Exception as e:
+                st.error(e)
 else:
-    st.error("Input needed to dream.")
+    st.success("Provide Input to Dream")
     
     
