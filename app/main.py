@@ -1,9 +1,7 @@
 import streamlit as st
 from streamlit_image_select import image_select
-import pyautogui
 
 import uuid
-import copy
 
 from utils import generate_image
 from utils import download_image
