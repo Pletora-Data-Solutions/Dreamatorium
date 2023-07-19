@@ -27,7 +27,8 @@ st.markdown('---')
 st.markdown("<h5 style='text-align: center;'>What is on your mind?</h5>", unsafe_allow_html=True)
 st.text_area("", height=100, key='input', help='')
 
-st.session_state.session_id = uuid.uuid4()
+if "session_id" not in st.session_state:
+    st.session_state.session_id = uuid.uuid4()
     
 if "dream" not in st.session_state:
     st.session_state.dream = False
