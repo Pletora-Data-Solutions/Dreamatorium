@@ -38,7 +38,11 @@ def download_image(url: str, session_id: str) -> bool:
         )
     
     img_to_download = Image.fromarray(resized, 'RGB')
-    img_to_download.save(f"data/images/{session_id}.png")
+    if not os.path.exists('data/images/'):
+        os.makedirs('data/images/')
+        img_to_download.save(f"data/images/{session_id}.png")
+    else:
+        img_to_download.save(f"data/images/{session_id}.png")
     # response = requests.get(url)
     # if response.status_code == 200:
     #     with open("dall_e_image.jpg", "wb") as f:
